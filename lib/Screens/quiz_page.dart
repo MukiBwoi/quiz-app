@@ -67,9 +67,12 @@ class QuizPage extends StatelessWidget {
                           },
                           itemBuilder: (BuildContext context, int index) {
                             return RadioListTile(
-                              value: 1,
-                              groupValue: 0,
-                              onChanged: (val) {},
+                              value: index + 1,
+                              groupValue: myType.radioVal,
+                              onChanged: (val) {
+                                quizConfig.setRadioVal(val);
+                                debugPrint(myType.radioVal.toString());
+                              },
                               title: Text(quizConfig
                                   .answers[myType.quizNo]![index]
                                   .toString()),
@@ -93,7 +96,12 @@ class QuizPage extends StatelessWidget {
                               : Container(),
                           ElevatedButton(
                             onPressed: () {
+                              quizConfig.setUserAnswers(
+                                context,  myType.quizNo, myType.radioVal);
                               quizConfig.navigatePages(context, "Next Quiz");
+                              myType.radioVal = 0;
+                              debugPrint(myType.userAnswers.toString())
+                              ;
                             },
                             child: const Text("Next Quiz"),
                           ),
